@@ -504,66 +504,91 @@
 
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import {
-    getFirestore, collection, addDoc, deleteDoc, doc,
-    onSnapshot, query, orderBy
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBWCpwrX4jxkXuNXEE4icvIlVVTztaYqco",
-    authDomain: "breast-cancer-5a18e.firebaseapp.com",
-    projectId: "breast-cancer-5a18e",
-    storageBucket: "breast-cancer-5a18e.firebasestorage.app",
-    messagingSenderId: "72409512340",
-    appId: "1:72409512340:web:776a316e9dc920f31ab781"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const postsRef = collection(db, "posts");
+<script>
+  // ============================================================
+  // JSONBin.io storage — paste your own values here
+  // ============================================================
+  const JSONBIN_API_KEY = "$2a$10$zg5EUyL9Whagc/rJSkBh1eGoZs63ugVA0aXBIOr3v9qjRjoVwhp7u";
+  const JSONBIN_BIN_ID = "6a9ecd16ac6210605ab019a5";
+  const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
   const AUTHOR_USER = "shruthi";
   const AUTHOR_PASS = "pinkforareason";
   let isAuthed = sessionStorage.getItem("pfr_session") === "true";
   let latestPosts = [];
 
-  window.openAuthModal = function () {
+  function openAuthModal() {
     if (isAuthed) {
       document.getElementById("journal").scrollIntoView({ behavior: "smooth" });
       return;
     }
     document.getElementById("authModal").style.display = "flex";
-  };
-  window.closeAuthModal = function () {
+  }
+  function closeAuthModal() {
     document.getElementById("authModal").style.display = "none";
     document.getElementById("authError").style.display = "none";
-  };
-  window.attemptLogin = function () {
+  }
+  function attemptLogin() {
     const u = document.getElementById("authUser").value.trim().toLowerCase();
     const p = document.getElementById("authPass").value;
     if (u === AUTHOR_USER && p === AUTHOR_PASS) {
       isAuthed = true;
       sessionStorage.setItem("pfr_session", "true");
-      window.closeAuthModal();
+      closeAuthModal();
       updateAuthUI();
     } else {
       document.getElementById("authError").style.display = "block";
     }
-  };
-  window.logoutAuthor = function () {
+  }
+  function logoutAuthor() {
     isAuthed = false;
     sessionStorage.removeItem("pfr_session");
     updateAuthUI();
-  };
+  }
   function updateAuthUI() {
     document.getElementById("authorPanel").style.display = isAuthed ? "block" : "none";
     document.getElementById("authLink").textContent = isAuthed ? "Author Panel" : "Author Login";
     renderPosts(latestPosts);
   }
 
-  window.publishPost = async function () {
+  // --- Read all posts from JSONBin ---
+  async function fetchPosts() {
+    try {
+      const res = await fetch(`${JSONBIN_URL}/latest`, {
+        headers: { "X-Master-Key": JSONBIN_API_KEY }
+      });
+      if (!res.ok) throw new Error("Bad response: " + res.status);
+      const data = await res.json();
+      return (data.record && data.record.posts) ? data.record.posts : [];
+    } catch (e) {
+      console.error("Could not load posts", e);
+      document.getElementById("postsList").innerHTML =
+        '<p style="color:var(--rose);">Could not load journal entries. Check your JSONBin API key and Bin ID are correct.</p>';
+      return null;
+    }
+  }
+
+  // --- Overwrite the bin with a new posts array ---
+  async function writePosts(posts) {
+    try {
+      const res = await fetch(JSONBIN_URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": JSONBIN_API_KEY
+        },
+        body: JSON.stringify({ posts })
+      });
+      if (!res.ok) throw new Error("Bad response: " + res.status);
+      return true;
+    } catch (e) {
+      console.error("Could not save post", e);
+      alert("Could not save — check your connection and try again.");
+      return false;
+    }
+  }
+
+  async function publishPost() {
     const titleEl = document.getElementById("postTitle");
     const bodyEl = document.getElementById("postBody");
     const title = titleEl.value.trim();
@@ -574,30 +599,36 @@
     btn.textContent = "Publishing...";
     btn.disabled = true;
 
-    try {
-      await addDoc(postsRef, {
+    const posts = await fetchPosts();
+    if (posts !== null) {
+      posts.unshift({
+        id: Date.now(),
         title, body,
-        createdAt: Date.now(),
         dateLabel: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
       });
-      titleEl.value = "";
-      bodyEl.value = "";
-    } catch (e) {
-      alert("Could not publish — check your connection and try again.");
-      console.error(e);
+      const ok = await writePosts(posts);
+      if (ok) {
+        titleEl.value = "";
+        bodyEl.value = "";
+        latestPosts = posts;
+        renderPosts(latestPosts);
+      }
     }
     btn.textContent = "Publish";
     btn.disabled = false;
-  };
+  }
 
-  window.deletePost = async function (id) {
-    try {
-      await deleteDoc(doc(db, "posts", id));
-    } catch (e) {
-      alert("Could not delete — try again.");
-      console.error(e);
+  async function deletePost(id) {
+    const posts = await fetchPosts();
+    if (posts !== null) {
+      const filtered = posts.filter(p => p.id !== id);
+      const ok = await writePosts(filtered);
+      if (ok) {
+        latestPosts = filtered;
+        renderPosts(latestPosts);
+      }
     }
-  };
+  }
 
   function renderPosts(posts) {
     const list = document.getElementById("postsList");
@@ -607,7 +638,7 @@
         <div class="post-date">${p.dateLabel}</div>
         <h3>${escapeHtml(p.title)}</h3>
         <p>${escapeHtml(p.body)}</p>
-        ${isAuthed ? `<span class="delete-post" onclick="deletePost('${p.id}')">Delete</span>` : ""}
+        ${isAuthed ? `<span class="delete-post" onclick="deletePost(${p.id})">Delete</span>` : ""}
       </div>
     `).join("");
   }
@@ -617,17 +648,12 @@
     return div.innerHTML;
   }
 
-  const q = query(postsRef, orderBy("createdAt", "desc"));
-  onSnapshot(q, (snapshot) => {
-    latestPosts = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderPosts(latestPosts);
-  }, (error) => {
-    document.getElementById("postsList").innerHTML =
-      '<p style="color:var(--rose);">Could not load journal entries. Check your Firestore connection.</p>';
-    console.error(error);
-  });
-
-  updateAuthUI();
+  // Init: load posts once on page load
+  (async () => {
+    const posts = await fetchPosts();
+    latestPosts = posts || [];
+    updateAuthUI();
+  })();
 </script>
 </body>
 </html>
