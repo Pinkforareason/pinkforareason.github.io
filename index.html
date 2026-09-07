@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pink for a Reason — Shruthi's Breast Cancer Awareness Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #A6395C;
+    --rose-deep: #7A2745;
+    --plum: #3B1830;
+    --blush: #FBF0EC;
+    --cream: #FFF8F4;
+    --gold: #C99A3E;
+    --ink: #362027;
+    --ink-soft: #6B4F58;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--blush);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--plum);
+    line-height: 1.15;
+  }
+
+  a { color: var(--rose-deep); }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* NAV */
+  nav {
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  nav .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--rose-deep);
+  }
+  nav .links a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-left: 22px;
+  }
+
+  /* RIBBON MOTIF */
+  .ribbon-mark {
+    width: 34px;
+    height: 44px;
+    display: inline-block;
+    position: relative;
+  }
+  .ribbon-mark::before, .ribbon-mark::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 30px;
+    background: var(--rose);
+    border-radius: 4px;
+    top: 4px;
+  }
+  .ribbon-mark::before {
+    left: 8px;
+    transform: rotate(22deg);
+    transform-origin: top center;
+  }
+  .ribbon-mark::after {
+    right: 8px;
+    transform: rotate(-22deg);
+    transform-origin: top center;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 40px 0 60px;
+  }
+  .hero .eyebrow {
+    color: var(--rose-deep);
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    margin-bottom: 22px;
+    letter-spacing: -0.01em;
+  }
+  .hero .lede {
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    max-width: 540px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 52px 0;
+    border-top: 1px solid rgba(59, 24, 48, 0.1);
+  }
+  section h2 {
+    font-size: 1.9rem;
+    margin-bottom: 22px;
+  }
+  section p {
+    font-size: 1.08rem;
+    color: var(--ink);
+    margin-bottom: 18px;
+    max-width: 620px;
+  }
+  section p:last-child { margin-bottom: 0; }
+
+  /* PULL STAT */
+  .pull-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin: 30px 0;
+    padding: 22px 0;
+    border-top: 1px solid rgba(166, 57, 92, 0.25);
+    border-bottom: 1px solid rgba(166, 57, 92, 0.25);
+  }
+  .pull-stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--rose);
+    white-space: nowrap;
+  }
+  .pull-stat .label {
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+
+  /* TIMELINE */
+  .timeline {
+    margin-top: 28px;
+  }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(59, 24, 48, 0.08);
+  }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-item .tl-date {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--rose-deep);
+    font-size: 0.95rem;
+    padding-top: 2px;
+  }
+  .tl-item .tl-body h3 {
+    font-size: 1.08rem;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .tl-item .tl-body p {
+    font-size: 0.98rem;
+    margin-bottom: 0;
+    color: var(--ink-soft);
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: var(--cream);
+    border-left: 4px solid var(--gold);
+    padding: 24px 26px;
+    margin: 26px 0;
+    border-radius: 2px;
+  }
+  .highlight p {
+    margin-bottom: 0;
+    font-size: 1.05rem;
+  }
+  .highlight .signoff {
+    margin-top: 12px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+
+  /* CTA */
+  .cta-box {
+    background: var(--plum);
+    color: var(--blush);
+    padding: 42px 32px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+  .cta-box h3 {
+    color: var(--blush);
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+  }
+  .cta-box p {
+    color: rgba(251, 240, 236, 0.85);
+    margin-bottom: 22px;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--rose);
+    color: white;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--blush);
+    border: 1px solid rgba(251, 240, 236, 0.4);
+  }
+
+  /* CHECKLIST */
+  .check-list {
+    list-style: none;
+    margin: 22px 0;
+  }
+  .check-list li {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    font-size: 1.02rem;
+  }
+  .check-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 8px;
+  }
+
+  footer {
+    padding: 40px 0 60px;
+    text-align: center;
+  }
+  footer .ribbon-mark { margin-bottom: 14px; }
+  footer p {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    .tl-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* AUTH & JOURNAL */
+  #authLink {
+    color: var(--rose-deep);
+    font-weight: 600;
+  }
+
+  .author-input {
+    width: 100%;
+    padding: 11px 14px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(59, 24, 48, 0.2);
+    border-radius: 3px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.98rem;
+    background: white;
+    color: var(--ink);
+  }
+  .author-input:focus {
+    outline: 2px solid var(--rose);
+    outline-offset: 1px;
+  }
+  textarea.author-input {
+    resize: vertical;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(59, 24, 48, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+  }
+  .modal-box {
+    background: var(--cream);
+    padding: 32px;
+    border-radius: 4px;
+    max-width: 380px;
+    width: 100%;
+  }
+  .modal-box h3 {
+    font-size: 1.3rem;
+  }
+
+  .post-entry {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(59, 24, 48, 0.08);
+  }
+  .post-entry:last-child { border-bottom: none; }
+  .post-entry .post-date {
+    font-size: 0.85rem;
+    color: var(--rose-deep);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .post-entry h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+  }
+  .post-entry p {
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    margin-bottom: 0;
+  }
+  .post-entry .delete-post {
+    font-size: 0.82rem;
+    color: var(--rose);
+    cursor: pointer;
+    margin-top: 8px;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Pink for a Reason</div>
+  <div class="links">
+    <a href="#story">My Story</a>
+    <a href="#facts">The Facts</a>
+    <a href="#campaign">My Campaign</a>
+    <a href="#journal">Journal</a>
+    <a href="#help">Get Involved</a>
+    <a href="#" id="authLink" onclick="openAuthModal(); return false;">Author Login</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <span class="ribbon-mark" aria-hidden="true"></span>
+    <p class="eyebrow" style="margin-top:14px;">A student-led awareness project</p>
+    <h1>Pink for a Reason</h1>
+    <p class="lede">I'm Shruthi, and I started this project because I believe awareness is something everyone can help spread — even someone my age. This is the story of why, what I've learned, and how my school raised real support for real research.</p>
+  </section>
+
+  <section id="story">
+    <h2>Why I Started This</h2>
+    <p>Last year, I began volunteering at a senior care facility near my school, where I would sit and talk with the residents, read to them, and just listen to their stories. A few of them had lost people close to them to breast cancer, and hearing what that loss meant to them stayed with me.</p>
+    <p>I've always known I wanted to work in medicine — I hope to become a neurosurgeon one day — but that conversation was the first time I understood that helping people doesn't have to wait until you're a doctor. It can start with something as simple as making sure the people around you know the facts, and know that someone their age cares enough to talk about it.</p>
+    <p>So I decided to build something that could actually do that: a small website, written in my own words, that explains what I've learned and shares what my school did to help.</p>
+  </section>
+
+  <section id="facts">
+    <h2>The Facts Worth Knowing</h2>
+    <p>I'm not a doctor yet, so everything here comes from public health awareness sources, not medical advice. But these are the facts that changed how seriously I took this topic.</p>
+
+    <div class="pull-stat">
+      <div class="num">1 in 8</div>
+      <div class="label">women are estimated to develop breast cancer in their lifetime, according to global public health awareness campaigns — which means almost everyone knows someone it could affect.</div>
+    </div>
+
+    <p>Early detection is the single fact that comes up again and again in every awareness campaign I researched. When breast cancer is found early, treatment tends to be far more effective — which is exactly why awareness months, self-check reminders, and regular screenings exist: not to alarm people, but to catch things sooner.</p>
+
+    <div class="highlight">
+      <p>October is recognised internationally as Breast Cancer Awareness Month — which is part of why I chose to run my fundraiser during that period, so the message and the giving happened at the same time.</p>
+    </div>
+
+    <p>The other fact that stayed with me: awareness campaigns work best when they come from ordinary people talking to people they know, not just posters in a hospital. That's the entire reason this website exists.</p>
+  </section>
+
+  <section id="campaign">
+    <h2>My Campaign: Let's Go Pink</h2>
+    <p>In support of the Al Jalila Foundation's medical research, I ran a crowdfunding campaign called <strong>"Let's Go Pink for Breast Cancer"</strong> through YallaGive. My goal was simple: turn awareness into something that could actually fund research, not just conversation.</p>
+
+    <div class="pull-stat">
+      <div class="num">AED 2,100+</div>
+      <div class="label">raised from 40 individual donors, exceeding my original target.</div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">Step 1</div>
+        <div class="tl-body">
+          <h3>Choosing the cause</h3>
+          <p>I chose the Al Jalila Foundation because their work funds real medical research happening right here in the UAE, not just international campaigns I couldn't see the impact of.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Step 2</div>
+        <div class="tl-body">
+          <h3>Setting a target</h3>
+          <p>I set a fundraising goal that felt ambitious but honest, based on what I thought I could realistically ask people close to me to give.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Step 3</div>
+        <div class="tl-body">
+          <h3>Reaching out, one person at a time</h3>
+          <p>I didn't just post a link and hope. I spoke to family, teachers, and family friends directly, explaining why the cause mattered to me personally.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Step 4</div>
+        <div class="tl-body">
+          <h3>Exceeding the goal</h3>
+          <p>Forty people said yes. That number still means more to me than the total amount — forty separate people who decided this was worth their time and money because I asked.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="journal">
+    <h2>Journal</h2>
+    <p>Updates, things I've learned, and what happens after the campaign ends — written as I go.</p>
+
+    <div id="authorPanel" style="display:none; margin: 26px 0;">
+      <div class="highlight" style="border-left-color: var(--rose);">
+        <p style="margin-bottom:14px; font-weight:600;">Signed in as author</p>
+        <input type="text" id="postTitle" placeholder="Post title" class="author-input">
+        <textarea id="postBody" placeholder="Write your update..." class="author-input" rows="5"></textarea>
+        <div style="display:flex; gap:12px; margin-top:14px;">
+          <button class="btn btn-primary" id="publishBtn" style="border:none; cursor:pointer;" onclick="publishPost()">Publish</button>
+          <button class="btn btn-secondary" style="border:1px solid var(--rose-deep); color:var(--rose-deep); cursor:pointer;" onclick="logoutAuthor()">Log Out</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="postsList" class="timeline"></div>
+    <p id="noPostsMsg" style="color: var(--ink-soft); font-style: italic; display:none;">No entries yet — check back soon.</p>
+  </section>
+
+  <!-- LOGIN MODAL -->
+  <div id="authModal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <h3 style="margin-bottom:18px;">Author Login</h3>
+      <p style="color:var(--ink-soft); font-size:0.92rem; margin-bottom:18px;">This area is just for Shruthi to post journal updates.</p>
+      <input type="text" id="authUser" placeholder="Username" class="author-input">
+      <input type="password" id="authPass" placeholder="Password" class="author-input">
+      <p id="authError" style="color: var(--rose); font-size:0.9rem; display:none; margin-bottom:10px;">Incorrect username or password.</p>
+      <div style="display:flex; gap:12px; margin-top:8px;">
+        <button class="btn btn-primary" style="border:none; cursor:pointer;" onclick="attemptLogin()">Log In</button>
+        <button class="btn btn-secondary" style="border:1px solid var(--rose-deep); color:var(--rose-deep); cursor:pointer;" onclick="closeAuthModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="help">
+    <h2>What You Can Do</h2>
+    <p>You don't need a campaign or a website to make a difference. A few small habits, repeated by enough people, add up to real awareness.</p>
+
+    <ul class="check-list">
+      <li>Talk to the women in your life about the importance of regular self-checks and screenings — awkward conversations save lives.</li>
+      <li>Share one real fact with someone this week, not just a pink ribbon graphic.</li>
+      <li>If you can, support a verified medical research fund like the Al Jalila Foundation, even in a small way.</li>
+      <li>Remember that awareness isn't a one-month event — the facts matter in March just as much as they do in October.</li>
+    </ul>
+
+    <div class="cta-box">
+      <h3>Want to support real research?</h3>
+      <p>My campaign may be complete, but the Al Jalila Foundation's work continues year-round. A small donation goes further than you'd think.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-primary">Learn About Al Jalila Foundation</a>
+        <a href="#story" class="btn btn-secondary">Read My Story Again</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="ribbon-mark" aria-hidden="true"></span>
+    <p>A project by Shruthi Sree · Built to turn a conversation into something people could act on.</p>
+  </footer>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc, deleteDoc, doc,
+    onSnapshot, query, orderBy
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBWCpwrX4jxkXuNXEE4icvIlVVTztaYqco",
+    authDomain: "breast-cancer-5a18e.firebaseapp.com",
+    projectId: "breast-cancer-5a18e",
+    storageBucket: "breast-cancer-5a18e.firebasestorage.app",
+    messagingSenderId: "72409512340",
+    appId: "1:72409512340:web:776a316e9dc920f31ab781"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const postsRef = collection(db, "posts");
+
+  const AUTHOR_USER = "shruthi";
+  const AUTHOR_PASS = "pinkforareason";
+  let isAuthed = sessionStorage.getItem("pfr_session") === "true";
+  let latestPosts = [];
+
+  window.openAuthModal = function () {
+    if (isAuthed) {
+      document.getElementById("journal").scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    document.getElementById("authModal").style.display = "flex";
+  };
+  window.closeAuthModal = function () {
+    document.getElementById("authModal").style.display = "none";
+    document.getElementById("authError").style.display = "none";
+  };
+  window.attemptLogin = function () {
+    const u = document.getElementById("authUser").value.trim().toLowerCase();
+    const p = document.getElementById("authPass").value;
+    if (u === AUTHOR_USER && p === AUTHOR_PASS) {
+      isAuthed = true;
+      sessionStorage.setItem("pfr_session", "true");
+      window.closeAuthModal();
+      updateAuthUI();
+    } else {
+      document.getElementById("authError").style.display = "block";
+    }
+  };
+  window.logoutAuthor = function () {
+    isAuthed = false;
+    sessionStorage.removeItem("pfr_session");
+    updateAuthUI();
+  };
+  function updateAuthUI() {
+    document.getElementById("authorPanel").style.display = isAuthed ? "block" : "none";
+    document.getElementById("authLink").textContent = isAuthed ? "Author Panel" : "Author Login";
+    renderPosts(latestPosts);
+  }
+
+  window.publishPost = async function () {
+    const titleEl = document.getElementById("postTitle");
+    const bodyEl = document.getElementById("postBody");
+    const title = titleEl.value.trim();
+    const body = bodyEl.value.trim();
+    if (!title || !body) return;
+
+    const btn = document.getElementById("publishBtn");
+    btn.textContent = "Publishing...";
+    btn.disabled = true;
+
+    try {
+      await addDoc(postsRef, {
+        title, body,
+        createdAt: Date.now(),
+        dateLabel: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+      });
+      titleEl.value = "";
+      bodyEl.value = "";
+    } catch (e) {
+      alert("Could not publish — check your connection and try again.");
+      console.error(e);
+    }
+    btn.textContent = "Publish";
+    btn.disabled = false;
+  };
+
+  window.deletePost = async function (id) {
+    try {
+      await deleteDoc(doc(db, "posts", id));
+    } catch (e) {
+      alert("Could not delete — try again.");
+      console.error(e);
+    }
+  };
+
+  function renderPosts(posts) {
+    const list = document.getElementById("postsList");
+    document.getElementById("noPostsMsg").style.display = posts.length ? "none" : "block";
+    list.innerHTML = posts.map(p => `
+      <div class="post-entry">
+        <div class="post-date">${p.dateLabel}</div>
+        <h3>${escapeHtml(p.title)}</h3>
+        <p>${escapeHtml(p.body)}</p>
+        ${isAuthed ? `<span class="delete-post" onclick="deletePost('${p.id}')">Delete</span>` : ""}
+      </div>
+    `).join("");
+  }
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  const q = query(postsRef, orderBy("createdAt", "desc"));
+  onSnapshot(q, (snapshot) => {
+    latestPosts = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderPosts(latestPosts);
+  }, (error) => {
+    document.getElementById("postsList").innerHTML =
+      '<p style="color:var(--rose);">Could not load journal entries. Check your Firestore connection.</p>';
+    console.error(error);
+  });
+
+  updateAuthUI();
+</script>
+</body>
+</html>
